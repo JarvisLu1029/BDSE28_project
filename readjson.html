@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+
+<body>
+    <div id="divframe">
+        <div class="loadTitle">
+            <input type="button" value="獲取資料" id="btn" />
+        </div>
+        <div id="jsonTip"></div>
+    </div>
+
+    <script>
+        //監聽按鈕點選事件
+        $("#btn").click(function () {
+            // 同文件夾下的json檔案路徑
+            var url = "lng_lat.json"
+            // 申明一個XMLHttpRequest
+            var request = new XMLHttpRequest();
+            // 設定請求方法與路徑
+            request.open("get", url);
+            // 不傳送資料到伺服器
+            request.send(null);
+            //XHR物件獲取到返回資訊後執行
+            request.onload = function () {
+                // 返回狀態為200，即為資料獲取成功
+                if (request.status == 200) {
+                    var data = JSON.parse(request.responseText);
+                    console.log(data);
+                    //獲取jsonTip的div
+                    var $jsontip = $("#jsonTip");
+                    //儲存資料的變數 
+                    var strHtml = "";
+                    //清空內容 
+                    $jsontip.empty();
+                    twlocation = {};
+                    data2 = [];
+                    //將獲取到的json格式資料遍歷到div中
+                    $.each(data, function (infoIndex, info) {
+                        strHtml += "{" + "lat:" + info["lat"] + "," + "lng:" + info["lng"] + "}" + ",";
+                    })
+                    //顯示處理後的資料 
+                    $jsontip.html(strHtml);
+
+
+
+                }
+            }
+        })
+
+    </script>
+
+</body>
+
+</html>
